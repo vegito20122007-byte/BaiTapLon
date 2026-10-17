@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.auction.client.controller.CreateAuctionController"
+            stylesheets="@../css/style.css" fitToWidth="true" prefWidth="540" prefHeight="640">
+    <VBox spacing="16">
+        <padding>
+            <Insets top="20" right="24" bottom="24" left="24"/>
+        </padding>
+
+        <VBox spacing="4">
+            <Label text="ĐĂNG SẢN PHẨM ĐẤU GIÁ" styleClass="title-text"/>
+            <Label text="Tạo phiên đấu giá mới và niêm yết sản phẩm lên sàn" styleClass="subtitle-text"/>
+        </VBox>
+
+        <VBox spacing="12" styleClass="card-pane">
+            <VBox spacing="6">
+                <Label text="Danh mục sản phẩm:" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="cbCategory" maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Tên sản phẩm:" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="txtItemName" promptText="Ví dụ: iPhone 16 Pro Max 256GB"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Mô tả chi tiết:" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="txtDescription" promptText="Mô tả tình trạng, nguồn gốc, phụ kiện kèm theo..." prefRowCount="3" wrapText="true"/>
+            </VBox>
+
+            <HBox spacing="12">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Giá khởi điểm (VND):" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtStartingPrice" promptText="Ví dụ: 10000000"/>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Bước giá tối thiểu (VND):" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtIncrement" text="100000"/>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="6">
+                <Label text="Thời lượng phiên (phút):" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="txtDuration" text="30"/>
+            </VBox>
+
+            <!-- Khung thông số mở rộng tùy theo loại sản phẩm (Factory Method) -->
+            <VBox fx:id="vboxExtraFields" spacing="10" style="-fx-background-color: #f1f5f9; -fx-padding: 12; -fx-background-radius: 8;">
+                <Label text="Thông số chuyên biệt theo danh mục" style="-fx-font-weight: bold; -fx-text-fill: #334155;"/>
+                <HBox fx:id="boxField1" spacing="10" alignment="CENTER_LEFT">
+                    <Label fx:id="lblField1" text="Thương hiệu:" prefWidth="140"/>
+                    <TextField fx:id="txtField1" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox fx:id="boxField2" spacing="10" alignment="CENTER_LEFT">
+                    <Label fx:id="lblField2" text="Bảo hành (tháng):" prefWidth="140"/>
+                    <TextField fx:id="txtField2" HBox.hgrow="ALWAYS"/>
+                </HBox>
+            </VBox>
+
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Hủy" onAction="#handleCancel" styleClass="btn-secondary"/>
+                <Button text="✔ Đăng sản phẩm &amp; Mở phiên" onAction="#handleSubmit" styleClass="btn-primary"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</ScrollPane>
