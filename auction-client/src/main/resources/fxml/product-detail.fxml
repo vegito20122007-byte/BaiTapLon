@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.auction.client.controller.ProductDetailDialogController"
+      stylesheets="@../css/style.css" spacing="16" prefWidth="540" prefHeight="650">
+    <padding>
+        <Insets top="24" right="24" bottom="24" left="24"/>
+    </padding>
+
+    <!-- Header -->
+    <VBox spacing="4">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label fx:id="lblCategory" text="CATEGORY" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 3 8; -fx-background-radius: 4; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblStatus" text="RUNNING" style="-fx-font-weight: bold; -fx-text-fill: #16a34a;"/>
+        </HBox>
+        <Label fx:id="lblTitle" text="Tên sản phẩm" styleClass="title-text" wrapText="true"/>
+    </VBox>
+
+    <Separator/>
+
+    <!-- Thông tin giá & người bán -->
+    <GridPane hgap="16" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50"/>
+            <ColumnConstraints percentWidth="50"/>
+        </columnConstraints>
+
+        <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label text="Giá khởi điểm:" styleClass="subtitle-text"/>
+            <Label fx:id="lblStartingPrice" text="0 VND" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+        </VBox>
+
+        <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label text="Giá hiện tại cao nhất:" styleClass="subtitle-text"/>
+            <Label fx:id="lblCurrentPrice" text="0 VND" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #dc2626;"/>
+        </VBox>
+
+        <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label text="Bước giá tối thiểu:" styleClass="subtitle-text"/>
+            <Label fx:id="lblMinIncrement" text="0 VND" style="-fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="Người dẫn đầu:" styleClass="subtitle-text"/>
+            <Label fx:id="lblHighestBidder" text="(Chưa có)" style="-fx-font-weight: bold; -fx-text-fill: #2563eb;"/>
+        </VBox>
+
+        <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Label text="Người bán (Seller):" styleClass="subtitle-text"/>
+            <Label fx:id="lblSeller" text="seller1" style="-fx-font-weight: bold;"/>
+        </VBox>
+
+        <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label text="Thời gian kết thúc:" styleClass="subtitle-text"/>
+            <Label fx:id="lblEndTime" text="N/A" style="-fx-font-weight: bold;"/>
+        </VBox>
+    </GridPane>
+
+    <!-- Thuộc tính chuyên biệt theo Đa hình OOP -->
+    <VBox fx:id="boxExtraAttributes" spacing="6" styleClass="card-pane" style="-fx-background-color: #f1f5f9; -fx-border-color: #cbd5e1;">
+        <Label text="THÔNG SỐ CHUYÊN BIỆT (OOP POLYMORPHISM)" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #475569;"/>
+        <Label fx:id="lblExtra1" text="Thuộc tính 1" style="-fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+        <Label fx:id="lblExtra2" text="Thuộc tính 2" style="-fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+        <Separator/>
+        <Label fx:id="lblPolymorphicSummary" text="Tóm tắt đa hình" wrapText="true" style="-fx-font-style: italic; -fx-text-fill: #64748b;"/>
+    </VBox>
+
+    <!-- Mô tả chi tiết -->
+    <VBox spacing="4" VBox.vgrow="ALWAYS">
+        <Label text="Mô tả sản phẩm:" styleClass="subtitle-text"/>
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+            <Label fx:id="lblDescription" text="Mô tả chi tiết..." wrapText="true" style="-fx-font-size: 13px; -fx-line-spacing: 4px;"/>
+        </ScrollPane>
+    </VBox>
+
+    <!-- Buttons -->
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <Button text="Đóng" onAction="#handleClose" styleClass="btn-secondary"/>
+        <Button text="⚡ Vào phòng đấu giá" onAction="#handleEnterRoom" styleClass="btn-success"/>
+    </HBox>
+</VBox>

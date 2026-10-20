@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.auction.client.controller.AuctionDetailController"
+          stylesheets="@../css/style.css" hgap="20" vgap="16" prefWidth="850" prefHeight="620">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="48"/>
+        <ColumnConstraints percentWidth="52"/>
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="100"/>
+    </rowConstraints>
+
+    <!-- Cột trái: Thông tin sản phẩm, Giá hiện tại & Nút đặt giá -->
+    <VBox spacing="16" GridPane.columnIndex="0">
+        <VBox spacing="10" styleClass="card-pane">
+            <Label fx:id="lblItemName" text="Tên sản phẩm" styleClass="title-text" wrapText="true"/>
+            <Separator/>
+
+            <VBox spacing="4">
+                <Label text="GIÁ CAO NHẤT HIỆN TẠI:" styleClass="subtitle-text"/>
+                <Label fx:id="lblCurrentPrice" text="0 VND" styleClass="price-display"/>
+            </VBox>
+
+            <HBox spacing="10">
+                <Label text="Người dẫn đầu:" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblHighestBidder" text="(Chưa có)" style="-fx-text-fill: #2563eb; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <HBox spacing="10">
+                <Label text="Thời gian kết thúc:" style="-fx-font-weight: bold;"/>
+                <Label fx:id="lblEndTime" text="N/A" style="-fx-text-fill: #dc2626;"/>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="10" styleClass="card-pane">
+            <Label text="ĐẶT GIÁ MỚI" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="txtBidAmount" promptText="Nhập số tiền..." HBox.hgrow="ALWAYS"/>
+                <Button text="⚡ Đặt giá" onAction="#handlePlaceBid" styleClass="btn-success"/>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="10" styleClass="card-pane" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1;">
+            <HBox alignment="CENTER_LEFT">
+                <Label text="🤖 ĐẤU GIÁ TỰ ĐỘNG (AUTO-BID)" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1e293b;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="lblAutoBidStatus" text="Trạng thái: Chưa bật" style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
+            </HBox>
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <TextField fx:id="txtAutoMaxBid" promptText="Giá tối đa (maxBid)..." HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="txtAutoIncrement" promptText="Bước giá..." prefWidth="120"/>
+            </HBox>
+            <HBox spacing="10">
+                <Button text="Bật Auto-Bid" onAction="#handleSetAutoBid" styleClass="btn-primary" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <Button text="Tắt Auto-Bid" onAction="#handleCancelAutoBid" styleClass="btn-secondary" style="-fx-text-fill: #dc2626;"/>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="6" VBox.vgrow="ALWAYS">
+            <Label text="Lịch sử các lượt trả giá (Realtime):" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="listBidHistory" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </VBox>
+
+    <!-- Cột phải: Biểu đồ đường Realtime Price Curve (Tính năng nâng cao) -->
+    <VBox spacing="10" styleClass="card-pane" GridPane.columnIndex="1">
+        <Label text="BIỂU ĐỒ DIỄN BIẾN GIÁ REALTIME (PRICE CURVE)" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+        <LineChart fx:id="chartPriceCurve" animated="false" legendVisible="false" VBox.vgrow="ALWAYS">
+            <xAxis>
+                <CategoryAxis label="Thời gian (HH:mm:ss)"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Giá đấu (VND)"/>
+            </yAxis>
+        </LineChart>
+    </VBox>
+</GridPane>

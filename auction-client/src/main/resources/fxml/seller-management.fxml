@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.auction.client.controller.SellerManagementController"
+            stylesheets="@../css/style.css" prefWidth="950" prefHeight="600">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" styleClass="card-pane" style="-fx-background-radius: 0; -fx-border-width: 0 0 1 0;">
+            <padding>
+                <Insets top="16" right="20" bottom="16" left="20"/>
+            </padding>
+            <VBox HBox.hgrow="ALWAYS">
+                <Label text="QUẢN LÝ SẢN PHẨM &amp; PHIÊN ĐẤU GIÁ (SELLER)" styleClass="title-text"/>
+                <Label fx:id="lblSellerInfo" text="Người bán: seller1" styleClass="subtitle-text"/>
+            </VBox>
+            <Button text="🔄 Làm mới" onAction="#handleRefresh" styleClass="btn-secondary"/>
+            <Button text="Đóng" onAction="#handleClose" styleClass="btn-secondary"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="14">
+            <padding>
+                <Insets top="16" right="20" bottom="16" left="20"/>
+            </padding>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="➕ Đăng sản phẩm mới" onAction="#handleCreateNew" styleClass="btn-primary"/>
+                <Button text="✏️ Chỉnh sửa thông tin" onAction="#handleEditAuction" styleClass="btn-secondary"/>
+                <Button text="🗑️ Xóa sản phẩm" onAction="#handleDeleteAuction" styleClass="btn-secondary" style="-fx-text-fill: #dc2626; -fx-border-color: #fca5a5;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="💳 Xác nhận thanh toán (PAID)" onAction="#handleConfirmPayment" styleClass="btn-primary" style="-fx-background-color: #059669;"/>
+                <Button text="⚡ Vào phòng đấu giá" onAction="#handleEnterRoom" styleClass="btn-success"/>
+            </HBox>
+
+            <TableView fx:id="tableMyAuctions" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="Mã phiên" prefWidth="70"/>
+                    <TableColumn fx:id="colItemName" text="Tên sản phẩm" prefWidth="250"/>
+                    <TableColumn fx:id="colStartingPrice" text="Giá khởi điểm (VND)" prefWidth="140"/>
+                    <TableColumn fx:id="colCurrentPrice" text="Giá hiện tại (VND)" prefWidth="150"/>
+                    <TableColumn fx:id="colHighestBidder" text="Người dẫn đầu" prefWidth="130"/>
+                    <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="100"/>
+                    <TableColumn fx:id="colEndTime" text="Thời gian kết thúc" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.auction.client.controller.AdminManagementController"
+      stylesheets="@../css/style.css" spacing="16" prefWidth="960" prefHeight="680">
+    <padding>
+        <Insets top="20" right="24" bottom="20" left="24"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <VBox HBox.hgrow="ALWAYS">
+            <Label text="TRUNG TÂM QUẢN TRỊ HỆ THỐNG (ADMIN PANEL)" styleClass="title-text"/>
+            <Label text="Giám sát người dùng, kiểm duyệt phiên đấu giá và thống kê sàn" styleClass="subtitle-text"/>
+        </VBox>
+        <Button text="Đóng" onAction="#handleClose" styleClass="btn-secondary"/>
+    </HBox>
+
+    <!-- TabPane phân tách các nghiệp vụ Admin -->
+    <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+        <!-- TAB 1: THỐNG KÊ TỔNG QUAN -->
+        <Tab text="📊 Thống kê &amp; Tổng quan">
+            <VBox spacing="20">
+                <padding>
+                    <Insets top="20" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <!-- Hàng thẻ KPI -->
+                <HBox spacing="16">
+                    <VBox HBox.hgrow="ALWAYS" styleClass="card-pane" spacing="6">
+                        <Label text="TỔNG SỐ NGƯỜI DÙNG" styleClass="subtitle-text"/>
+                        <Label fx:id="lblTotalUsers" text="0" style="-fx-font-size: 26px; -fx-font-weight: 800; -fx-text-fill: #2563eb;"/>
+                        <Label fx:id="lblUserBreakdown" text="Bidder: 0 | Seller: 0 | Admin: 0" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="card-pane" spacing="6">
+                        <Label text="PHIÊN ĐẤU GIÁ HOẠT ĐỘNG" styleClass="subtitle-text"/>
+                        <Label fx:id="lblRunningAuctions" text="0" style="-fx-font-size: 26px; -fx-font-weight: 800; -fx-text-fill: #16a34a;"/>
+                        <Label fx:id="lblAuctionBreakdown" text="Chạy: 0 | Kết thúc: 0 | Đã hủy: 0" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS" styleClass="card-pane" spacing="6">
+                        <Label text="TỔNG GIÁ TRỊ ĐẤU GIÁ CAO NHẤT" styleClass="subtitle-text"/>
+                        <Label fx:id="lblTotalVolume" text="0 VND" style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #ea580c;"/>
+                        <Label text="Tổng giá trị tích lũy các phiên" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Khung thông tin kỹ thuật hệ thống -->
+                <VBox styleClass="card-pane" spacing="10">
+                    <Label text="THÔNG TIN HỆ THỐNG VÀ BẢO MẬT" style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
+                    <Separator/>
+                    <GridPane hgap="20" vgap="10">
+                        <Label text="Kiến trúc:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+                        <Label text="Client - Server (Socket TCP/IP) + MVC Pattern" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <Label text="Quản lý đồng thời:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: bold;"/>
+                        <Label text="AuctionLockService (ReentrantLock) + ConcurrencyBid Engine" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                        <Label text="Cơ chế lưu trữ:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+                        <Label text="File Persistence (data/auctions.json &amp; data/users.json)" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                        <Label text="Cổng kết nối:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: bold;"/>
+                        <Label text="Port 8888" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    </GridPane>
+                </VBox>
+            </VBox>
+        </Tab>
+
+        <!-- TAB 2: QUẢN LÝ NGƯỜI DÙNG -->
+        <Tab text="👥 Quản lý người dùng">
+            <VBox spacing="14">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Danh sách tài khoản trong hệ thống:" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄 Làm mới" onAction="#handleRefreshUsers" styleClass="btn-secondary"/>
+                    <Button text="🗑️ Xóa người dùng" onAction="#handleDeleteUser" styleClass="btn-secondary" style="-fx-text-fill: #dc2626; -fx-border-color: #fca5a5;"/>
+                </HBox>
+
+                <TableView fx:id="tableUsers" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colUserId" text="ID" prefWidth="60"/>
+                        <TableColumn fx:id="colUsername" text="Tên đăng nhập" prefWidth="160"/>
+                        <TableColumn fx:id="colFullName" text="Họ và tên" prefWidth="200"/>
+                        <TableColumn fx:id="colEmail" text="Email" prefWidth="220"/>
+                        <TableColumn fx:id="colRole" text="Vai trò" prefWidth="120"/>
+                        <TableColumn fx:id="colUserDetail" text="Chi tiết đặc thù (OOP)" prefWidth="180"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+
+        <!-- TAB 3: QUẢN LÝ PHIÊN ĐẤU GIÁ -->
+        <Tab text="⚖️ Quản lý phiên đấu giá">
+            <VBox spacing="14">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Danh sách tất cả các phiên đấu giá:" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="🔄 Làm mới" onAction="#handleRefreshAuctions" styleClass="btn-secondary"/>
+                    <Button text="🛑 Hủy phiên vi phạm" onAction="#handleCancelAuction" styleClass="btn-secondary" style="-fx-text-fill: #d97706; -fx-border-color: #fde68a;"/>
+                    <Button text="🗑️ Xóa vĩnh viễn" onAction="#handleDeleteAuction" styleClass="btn-secondary" style="-fx-text-fill: #dc2626; -fx-border-color: #fca5a5;"/>
+                </HBox>
+
+                <TableView fx:id="tableAuctions" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colAucId" text="Mã phiên" prefWidth="80"/>
+                        <TableColumn fx:id="colAucItem" text="Tên sản phẩm" prefWidth="260"/>
+                        <TableColumn fx:id="colAucSeller" text="Người bán" prefWidth="140"/>
+                        <TableColumn fx:id="colAucPrice" text="Giá hiện tại (VND)" prefWidth="160"/>
+                        <TableColumn fx:id="colAucBidder" text="Người dẫn đầu" prefWidth="140"/>
+                        <TableColumn fx:id="colAucStatus" text="Trạng thái" prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </Tab>
+    </TabPane>
+</VBox>
